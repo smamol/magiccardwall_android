@@ -1,13 +1,15 @@
 package nz.co.trademe.fedex5.magiccardwall.activity;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -27,8 +29,14 @@ import retrofit.client.Response;
  */
 public class HistoryActivity extends ActionBarActivity implements ShakeDetector.Listener {
 
+	private static final String TAG = HistoryActivity.class.getSimpleName();
+
 	private static final String FRAGMENT = HistoryFragment.class.getName();
-    private String lastIssueId;
+
+	private String lastIssueId;
+
+	private AlertDialog dialog;
+	private ShakeDetector sd;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,25 +54,38 @@ public class HistoryActivity extends ActionBarActivity implements ShakeDetector.
 			FragmentTransaction transaction = getFragmentManager().beginTransaction();
 			transaction.add(R.id.fragmentContainer, fragment, FRAGMENT);
 			transaction.commit();
+		} else {
+			lastIssueId = savedInstanceState.getString("lastIssueId");
 		}
-        else {
-            lastIssueId = savedInstanceState.getString("lastIssueId");
-        }
-
-        SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        ShakeDetector sd = new ShakeDetector(this);
-        sd.start(sensorManager);
 
 //        Picasso.with(this).load("avatarUrl").into(imageView);
+
+		SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+		sd = new ShakeDetector(this);
+		sd.start(sensorManager);
 	}
 
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        // Save the user's current game state
-        savedInstanceState.putString("lastIssueId", lastIssueId);
+	@Override
+	protected void onPause() {
+		if (sd != null) {
+			sd.stop();
+		}
 
-        // Always call the superclass so it can save the view hierarchy state
-        super.onSaveInstanceState(savedInstanceState);
+		if (dialog != null) {
+			if (dialog.isShowing()) {
+				dialog.dismiss();
+			}
+
+			dialog = null;
+		}
+
+		super.onPause();
+	}
+
+	@Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+	    savedInstanceState.putString("lastIssueId", lastIssueId);
+	    super.onSaveInstanceState(savedInstanceState);
     }
 
     @Override
@@ -101,19 +122,57 @@ public class HistoryActivity extends ActionBarActivity implements ShakeDetector.
 
     @Override
     public void hearShake() {
-        if (lastIssueId != null && lastIssueId.length() > 0) {
-            JiraApiWrapper.getSingleton().getApi().status(lastIssueId, true, new ResponseCallback() {
-                @Override
-                public void success(Response response) {
-                    lastIssueId = null;
-                    Toast.makeText(HistoryActivity.this, "undo success", Toast.LENGTH_SHORT).show();
-                }
+	    Log.d(TAG, "Shake shake shake");
 
-                @Override
-                public void failure(RetrofitError error) {
-                    Toast.makeText(HistoryActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
+	    if (lastIssueId != null && lastIssueId.length() > 0) {
+		    showDialog("Shake it off", "Really move " + lastIssueId + " back?", "Just kidding", "Of course",
+				    new DialogInterface.OnClickListener() {
+			    @Override
+			    public void onClick(DialogInterface dialog, int which) {
+				    undo();
+			    }
+		    });
+	    }
     }
+
+	private void undo() {
+		JiraApiWrapper.getSingleton().getApi().status(lastIssueId, true, new ResponseCallback() {
+			@Override
+			public void success(Response response) {
+				lastIssueId = null;
+				Toast.makeText(HistoryActivity.this, "undo success", Toast.LENGTH_SHORT).show();
+			}
+
+			@Override
+			public void failure(RetrofitError error) {
+				Toast.makeText(HistoryActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
+			}
+		});
+	}
+
+	private void showDialog(String title, String msg, String negButton, String posButton, DialogInterface.OnClickListener posAction) {
+		if(dialog != null && dialog.isShowing()) {
+			dialog.dismiss();
+		}
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(HistoryActivity.this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
+				.setTitle("Shake it off")
+				.setMessage("Really move " + lastIssueId + " back?");
+
+		if (negButton != null) {
+			builder.setNegativeButton("Just kidding", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+				}
+			});
+		}
+
+		if(posButton != null) {
+			builder.setPositiveButton("Of course", posAction);
+		}
+
+		dialog = builder.create();
+		dialog.show();
+	}
 }
