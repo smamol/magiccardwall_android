@@ -1,6 +1,7 @@
 package nz.co.trademe.fedex5.magiccardwall.activity.test;
 
 import android.app.Activity;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -40,6 +41,8 @@ public class HistoryTestActivity extends Activity {
 
         setContentView(view);
 
+        playErrorSound();
+
         JiraApiWrapper.getSingleton().getApi().history(new Callback<ArrayList<HistoryItem>>() {
             @Override
             public void success(ArrayList<HistoryItem> historyItems, Response response) {
@@ -52,6 +55,18 @@ public class HistoryTestActivity extends Activity {
                 Log.e("HistoryTestActivity", error.toString());
             }
         });
+    }
+
+    private void playErrorSound() {
+        MediaPlayer mp = MediaPlayer.create(this, R.raw.error_sound);
+
+        mp.start();
+    }
+
+    private void playScanSound() {
+        MediaPlayer mp = MediaPlayer.create(this, R.raw.scan_sound);
+
+        mp.start();
     }
 
     @Override
