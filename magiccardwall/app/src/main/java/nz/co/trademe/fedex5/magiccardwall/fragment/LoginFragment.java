@@ -17,9 +17,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import nz.co.trademe.fedex5.magiccardwall.R;
 import nz.co.trademe.fedex5.magiccardwall.activity.HistoryActivity;
+import nz.co.trademe.fedex5.magiccardwall.api.JiraApiWrapper;
+import nz.co.trademe.fedex5.magiccardwall.api.request.LoginRequest;
+import nz.co.trademe.fedex5.magiccardwall.api.response.LoginResponse;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class LoginFragment extends Fragment {
 
@@ -170,11 +177,24 @@ public class LoginFragment extends Fragment {
 	}
 
 	private void login(String username, String password) {
-		// TODO login
+        JiraApiWrapper.getSingleton().getApi().login(new LoginRequest(username, password), new Callback<LoginResponse>() {
+            @Override
+            public void success(LoginResponse loginResponse, Response response) {
+                if (loginResponse.isSuccess()) {
+                    Intent i = new Intent(getActivity(), HistoryActivity.class);
+                    startActivity(i);
+                    getActivity().finish();
+                }
+                else {
+                    Toast.makeText(getActivity(), loginResponse.getErrorMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
 
-		Intent i = new Intent(getActivity(), HistoryActivity.class);
-		startActivity(i);
-		getActivity().finish();
+            @Override
+            public void failure(RetrofitError error) {
+                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
+            }
+        });
 	}
 
 
