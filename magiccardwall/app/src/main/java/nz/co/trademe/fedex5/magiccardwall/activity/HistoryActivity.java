@@ -1,22 +1,29 @@
 package nz.co.trademe.fedex5.magiccardwall.activity;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 
 import nz.co.trademe.fedex5.magiccardwall.R;
-import nz.co.trademe.fedex5.magiccardwall.fragment.LoginFragment;
+import nz.co.trademe.fedex5.magiccardwall.fragment.HistoryFragment;
 
-public class LoginActivity extends Activity {
+/**
+ * Created by shindmarsh on 06/11/2014.
+ */
+public class HistoryActivity extends ActionBarActivity {
 
-	private static final String FRAGMENT = LoginFragment.class.getName();
+	private static final String FRAGMENT = HistoryFragment.class.getName();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.activity);
+		setContentView(R.layout.activity_toolbar);
+
+		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
 
 		if (savedInstanceState == null) {
 			// create fragment
@@ -27,6 +34,4 @@ public class LoginActivity extends Activity {
 			transaction.commit();
 		}
 	}
-
-
 }

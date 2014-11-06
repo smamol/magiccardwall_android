@@ -1,8 +1,9 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="nz.co.trademe.fedex5.magiccardwall.fragment.LoginFragment"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="nz.co.trademe.fedex5.magiccardwall.fragment.LoginFragment"
     android:background="#002244">
 
     <LinearLayout
@@ -27,7 +28,7 @@
             android:layout_marginRight="12dp"
             android:layout_marginBottom="4dp"
             android:inputType="textEmailAddress"
-            android:hint="Username" />
+            android:hint="Username"/>
 
         <TextView
             android:id="@+id/textViewUsernameError"
@@ -39,13 +40,13 @@
             android:textColor="#C62828"
             android:text="Can't leave this empty"
             android:visibility="invisible"
-            tools:visibility="visible" />
+            tools:visibility="visible"/>
 
         <LinearLayout
             android:id="@+id/layoutPasswordRow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <EditText
                 android:hint="Password"

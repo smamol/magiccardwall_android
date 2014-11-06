@@ -4,6 +4,7 @@ package nz.co.trademe.fedex5.magiccardwall.fragment;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -18,10 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import nz.co.trademe.fedex5.magiccardwall.R;
+import nz.co.trademe.fedex5.magiccardwall.activity.HistoryActivity;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class LoginFragment extends Fragment {
 
 	private ImageView showPasswordButton;
@@ -133,7 +132,6 @@ public class LoginFragment extends Fragment {
 		if(num < views.length) {
 			handler.postDelayed(r, 200);
 		}
-		// TODO animate view reveal
 	}
 
 	private void showPasswordClicked() {
@@ -173,6 +171,10 @@ public class LoginFragment extends Fragment {
 
 	private void login(String username, String password) {
 		// TODO login
+
+		Intent i = new Intent(getActivity(), HistoryActivity.class);
+		startActivity(i);
+		getActivity().finish();
 	}
 
 

@@ -9,9 +9,7 @@
         android:theme="@style/AppTheme" >
 
         <activity
-            android:name=".activity.LoginActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:theme="@style/FullscreenTheme" >
+            android:name=".activity.LoginActivity" >
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,6 +18,8 @@
             </intent-filter>
 
         </activity>
+
+        <activity android:name=".activity.HistoryActivity" android:label="History"/>
 
     </application>
 
