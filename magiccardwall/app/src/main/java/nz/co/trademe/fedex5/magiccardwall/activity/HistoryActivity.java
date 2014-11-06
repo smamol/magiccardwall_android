@@ -57,6 +57,8 @@ public class HistoryActivity extends ActionBarActivity implements ShakeDetector.
 			lastIssueId = savedInstanceState.getString("lastIssueId");
 		}
 
+//        Picasso.with(this).load("avatarUrl").into(imageView);
+
 		SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 		sd = new ShakeDetector(this);
 		sd.start(sensorManager);
@@ -153,11 +155,11 @@ public class HistoryActivity extends ActionBarActivity implements ShakeDetector.
 		}
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(HistoryActivity.this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
-				.setTitle("Shake it off")
-				.setMessage("Really move " + lastIssueId + " back?");
+				.setTitle(title)
+				.setMessage(msg);
 
 		if (negButton != null) {
-			builder.setNegativeButton("Just kidding", new DialogInterface.OnClickListener() {
+			builder.setNegativeButton(negButton, new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.dismiss();
@@ -166,7 +168,7 @@ public class HistoryActivity extends ActionBarActivity implements ShakeDetector.
 		}
 
 		if(posButton != null) {
-			builder.setPositiveButton("Of course", posAction);
+			builder.setPositiveButton(posButton, posAction);
 		}
 
 		dialog = builder.create();
