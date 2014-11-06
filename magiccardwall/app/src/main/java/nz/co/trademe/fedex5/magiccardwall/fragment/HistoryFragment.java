@@ -37,5 +37,4 @@ public class HistoryFragment extends Fragment {
 
 	}
 
-
 }
