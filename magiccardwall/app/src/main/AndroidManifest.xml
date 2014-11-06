@@ -24,10 +24,6 @@
 
         <activity android:name=".activity.HistoryActivity" android:label="History"/>
 
-        <activity
-            android:name=".activity.QRCodeActivity"
-            android:label="@string/title_activity_qrcode" />
-
     </application>
 
 </manifest>
