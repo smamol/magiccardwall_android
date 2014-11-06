@@ -4,7 +4,9 @@ package nz.co.trademe.fedex5.magiccardwall.fragment;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -13,13 +15,22 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import nz.co.trademe.fedex5.magiccardwall.R;
 import nz.co.trademe.fedex5.magiccardwall.activity.HistoryActivity;
+import nz.co.trademe.fedex5.magiccardwall.api.JiraApiWrapper;
+import nz.co.trademe.fedex5.magiccardwall.api.network.JiraRequestInterceptor;
+import nz.co.trademe.fedex5.magiccardwall.api.request.LoginRequest;
+import nz.co.trademe.fedex5.magiccardwall.api.response.LoginResponse;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class LoginFragment extends Fragment {
 
@@ -170,12 +181,45 @@ public class LoginFragment extends Fragment {
 	}
 
 	private void login(String username, String password) {
-		// TODO login
+        hideKeyboard();
 
-		Intent i = new Intent(getActivity(), HistoryActivity.class);
-		startActivity(i);
-		getActivity().finish();
+        JiraApiWrapper.getSingleton().getApi().login(new LoginRequest(username, password), new Callback<LoginResponse>() {
+            @Override
+            public void success(LoginResponse loginResponse, Response response) {
+                if (loginResponse.isSuccess()) {
+                    cacheToken(loginResponse.getToken());
+                    Intent i = new Intent(getActivity(), HistoryActivity.class);
+                    startActivity(i);
+                    getActivity().finish();
+                }
+                else {
+                    Toast.makeText(getActivity(), loginResponse.getErrorMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
+            }
+        });
 	}
 
+    private void cacheToken(String token) {
+        SharedPreferences preferences = getActivity().getSharedPreferences("data", 0);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("token", token);
+        editor.commit();
 
+        JiraRequestInterceptor.getSingleton().setToken(token);
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager inputManager = (InputMethodManager) this.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        // check if no view has focus:
+        View view = this.getActivity().getCurrentFocus();
+        if (view != null) {
+            inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
 }

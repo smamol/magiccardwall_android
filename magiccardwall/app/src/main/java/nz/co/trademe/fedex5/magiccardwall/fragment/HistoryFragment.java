@@ -6,13 +6,14 @@ import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.zxing.integration.android.IntentIntegrator;
 
 import nz.co.trademe.fedex5.magiccardwall.R;
 
@@ -49,7 +50,12 @@ public class HistoryFragment extends Fragment {
 
 
 	private void beginScanQRCode() {
-		Log.d("qr", "QR button clicked");
+		IntentIntegrator integrator = new IntentIntegrator(getActivity());
+		integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+		integrator.setPrompt("Scan a QR code");
+		integrator.setResultDisplayDuration(0);
+		integrator.setCameraId(0);  // Use a specific camera of the device
+		integrator.initiateScan();
 	}
 
 	private class HistoryAdapter extends RecyclerView.Adapter {

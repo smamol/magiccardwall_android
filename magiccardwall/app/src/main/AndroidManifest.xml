@@ -3,6 +3,7 @@
     package="nz.co.trademe.fedex5.magiccardwall" >
 
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -22,10 +23,6 @@
         </activity>
 
         <activity android:name=".activity.HistoryActivity" android:label="History"/>
-
-        <activity
-            android:name=".activity.QRCodeActivity"
-            android:label="@string/title_activity_qrcode" />
 
     </application>
 
