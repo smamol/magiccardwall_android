@@ -1,15 +1,11 @@
 package nz.co.trademe.fedex5.magiccardwall.api;
 
 import nz.co.trademe.fedex5.magiccardwall.api.request.LoginRequest;
-import nz.co.trademe.fedex5.magiccardwall.api.request.MoveTaskRequest;
 import nz.co.trademe.fedex5.magiccardwall.api.response.LoginResponse;
-
-import nz.co.trademe.fedex5.magiccardwall.api.response.StatusResponse;
 import retrofit.Callback;
 import retrofit.ResponseCallback;
 import retrofit.http.Body;
 import retrofit.http.POST;
-import retrofit.http.Path;
 import retrofit.http.Query;
 
 /**
