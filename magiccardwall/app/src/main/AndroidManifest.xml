@@ -3,6 +3,7 @@
     package="nz.co.trademe.fedex5.magiccardwall" >
 
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"

@@ -16,6 +16,12 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import nz.co.trademe.fedex5.magiccardwall.R;
+import nz.co.trademe.fedex5.magiccardwall.api.JiraApiWrapper;
+import nz.co.trademe.fedex5.magiccardwall.api.request.LoginRequest;
+import nz.co.trademe.fedex5.magiccardwall.api.response.LoginResponse;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 
 public class QRCodeActivity extends Activity {
@@ -31,6 +37,26 @@ public class QRCodeActivity extends Activity {
         integrator.setResultDisplayDuration(0);
         integrator.setCameraId(0);  // Use a specific camera of the device
         integrator.initiateScan();
+    }
+
+    @OnClick(R.id.buttonLogin)
+    public void login() {
+        JiraApiWrapper.getSingleton().getApi().login(new LoginRequest("test", "test"), new Callback<LoginResponse>() {
+            @Override
+            public void success(LoginResponse loginResponse, Response response) {
+                if (loginResponse.isSuccess()) {
+                    Toast.makeText(QRCodeActivity.this, "success", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(QRCodeActivity.this, loginResponse.getErrorMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Toast.makeText(QRCodeActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override

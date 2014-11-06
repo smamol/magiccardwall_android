@@ -17,6 +17,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+        exclude 'META-INF/LGPL2.1'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
 }
 
 repositories {
@@ -54,4 +60,7 @@ dependencies {
     // This mostly affects encoding, but you should test if you plan to support these versions.
     // Older versions e.g. 2.2 may also work if you need support for older Android versions.
     compile 'com.google.zxing:core:3.0.1'
+
+    // Jackson - https://github.com/FasterXML/jackson
+    compile 'org.codehaus.jackson:jackson-mapper-lgpl:1.9.3'
 }
