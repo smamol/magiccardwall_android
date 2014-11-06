@@ -1,6 +1,9 @@
 package nz.co.trademe.fedex5.magiccardwall.api;
 
+import java.util.ArrayList;
+
 import nz.co.trademe.fedex5.magiccardwall.api.request.LoginRequest;
+import nz.co.trademe.fedex5.magiccardwall.api.response.HistoryItem;
 import nz.co.trademe.fedex5.magiccardwall.api.response.LoginResponse;
 import retrofit.Callback;
 import retrofit.ResponseCallback;
@@ -19,4 +22,6 @@ public interface JiraApi {
     @POST("/api/Status")
     void status(@Query("issueId") String issueId, @Query("undo") boolean undo, ResponseCallback callback);
 
+    @POST("/api/History")
+    void history(Callback<ArrayList<HistoryItem>> callback);
 }
