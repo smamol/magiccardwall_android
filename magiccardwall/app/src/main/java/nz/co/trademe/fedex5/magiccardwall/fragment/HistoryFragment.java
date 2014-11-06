@@ -4,15 +4,23 @@ package nz.co.trademe.fedex5.magiccardwall.fragment;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import nz.co.trademe.fedex5.magiccardwall.R;
 
 public class HistoryFragment extends Fragment {
+
+	private RecyclerView recyclerView;
+	private RecyclerView.LayoutManager layoutManager;
+	private RecyclerView.Adapter adapter;
 
 	public HistoryFragment() {}
 
@@ -29,12 +37,46 @@ public class HistoryFragment extends Fragment {
 			}
 		});
 
+		recyclerView = (RecyclerView) v.findViewById(R.id.recyclerHistory);
+
+		layoutManager = new LinearLayoutManager(getActivity());
+		recyclerView.setLayoutManager(layoutManager);
+
+		adapter = new HistoryAdapter();
 
 		return v;
 	}
 
-	private void beginScanQRCode() {
 
+	private void beginScanQRCode() {
+		Log.d("qr", "QR button clicked");
+	}
+
+	private class HistoryAdapter extends RecyclerView.Adapter {
+
+		private class ViewHolder extends RecyclerView.ViewHolder {
+			public TextView mTextView;
+
+			public ViewHolder(TextView v) {
+				super(v);
+				mTextView = v;
+			}
+		}
+
+		@Override
+		public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+			return null;
+		}
+
+		@Override
+		public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
+
+		}
+
+		@Override
+		public int getItemCount() {
+			return 0;
+		}
 	}
 
 }
