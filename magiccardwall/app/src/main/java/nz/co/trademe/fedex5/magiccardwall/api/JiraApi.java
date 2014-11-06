@@ -4,10 +4,13 @@ import nz.co.trademe.fedex5.magiccardwall.api.request.LoginRequest;
 import nz.co.trademe.fedex5.magiccardwall.api.request.MoveTaskRequest;
 import nz.co.trademe.fedex5.magiccardwall.api.response.LoginResponse;
 
-import nz.co.trademe.fedex5.magiccardwall.api.response.MoveTaskResponse;
+import nz.co.trademe.fedex5.magiccardwall.api.response.StatusResponse;
 import retrofit.Callback;
+import retrofit.ResponseCallback;
 import retrofit.http.Body;
 import retrofit.http.POST;
+import retrofit.http.Path;
+import retrofit.http.Query;
 
 /**
  * Created by pakuhata on 6/11/14.
@@ -17,6 +20,7 @@ public interface JiraApi {
     @POST("/api/Login")
     void login(@Body LoginRequest request, Callback<LoginResponse> callback);
 
-    void moveTask(MoveTaskRequest request, Callback<MoveTaskResponse> callback);
+    @POST("/api/Status")
+    void status(@Query("issueId") String issueId, ResponseCallback callback);
 
 }

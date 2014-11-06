@@ -3,7 +3,7 @@ package nz.co.trademe.fedex5.magiccardwall.api.response;
 /**
  * Created by pakuhata on 6/11/14.
  */
-public class MoveTaskResponse {
+public class StatusResponse {
     private String state;
 
     public String getState() {

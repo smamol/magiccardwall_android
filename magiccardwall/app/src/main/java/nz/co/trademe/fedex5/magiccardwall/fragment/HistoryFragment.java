@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+
 import nz.co.trademe.fedex5.magiccardwall.R;
 
 public class HistoryFragment extends Fragment {
@@ -29,12 +31,16 @@ public class HistoryFragment extends Fragment {
 			}
 		});
 
-
 		return v;
 	}
 
 	private void beginScanQRCode() {
-
+        IntentIntegrator integrator = new IntentIntegrator(getActivity());
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+        integrator.setPrompt("Scan a QR code");
+        integrator.setResultDisplayDuration(0);
+        integrator.setCameraId(0);  // Use a specific camera of the device
+        integrator.initiateScan();
 	}
 
 }
