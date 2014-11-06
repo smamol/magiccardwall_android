@@ -10,6 +10,7 @@ public class HistoryItem {
     private String date;
     private String status;
     private String avatarUrl;
+    private String username;
 
     public String getAvatarUrl() {
         return avatarUrl;
@@ -49,5 +50,13 @@ public class HistoryItem {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
