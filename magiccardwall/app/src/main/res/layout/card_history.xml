@@ -21,18 +21,37 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:id="@+id/imageViewAvatar"
-                android:src="@drawable/kitten"></ImageView>
+                android:src="@drawable/kitten"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="16dp"></ImageView>
 
-            <RadioButton
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="New RadioButton"
-                android:id="@+id/radioButton"
-                android:layout_centerVertical="true"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Pete moved the task &apos;abc&apos; into &apos;Done&apos;"
+                android:id="@+id/textViewTitle"
+                android:layout_alignTop="@+id/imageViewAvatar"
                 android:layout_toRightOf="@+id/imageViewAvatar"
                 android:layout_toEndOf="@+id/imageViewAvatar"
-                android:layout_marginLeft="33dp"
+                android:layout_marginLeft="16dp"
+                android:layout_alignBottom="@+id/imageViewAvatar"
+                android:layout_toLeftOf="@+id/imageViewColor"
+                android:layout_toStartOf="@+id/imageViewColor"
+                android:layout_marginRight="16dp"
                 android:textColor="#000" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/imageViewColor"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:background="#ff414aff"
+                android:layout_marginRight="16dp" />
 
         </RelativeLayout>
 

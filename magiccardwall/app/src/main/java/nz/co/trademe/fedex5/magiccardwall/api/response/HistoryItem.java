@@ -7,7 +7,7 @@ public class HistoryItem {
 
     private String id;
     private String title;
-    private String date;
+    private String timestamp;
     private String status;
     private String avatarUrl;
     private String username;
@@ -44,12 +44,12 @@ public class HistoryItem {
         this.title = title;
     }
 
-    public String getDate() {
-        return date;
+    public String getTimestamp() {
+        return timestamp;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
 
     public String getUsername() {

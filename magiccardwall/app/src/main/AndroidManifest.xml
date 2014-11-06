@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="nz.co.trademe.fedex5.magiccardwall" >
 
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -10,20 +10,20 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-
+        <activity android:name="nz.co.trademe.fedex5.magiccardwall.activity.LoginActivity" >
+        </activity>
         <activity
-            android:name=".activity.LoginActivity" >
-
+            android:name="nz.co.trademe.fedex5.magiccardwall.activity.HistoryActivity"
+            android:label="History" />
+        <activity
+            android:name=".activity.test.HistoryTestActivity"
+            android:label="@string/title_activity_history_test" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
-        <activity android:name=".activity.HistoryActivity" android:label="History"/>
-
     </application>
 
 </manifest>
