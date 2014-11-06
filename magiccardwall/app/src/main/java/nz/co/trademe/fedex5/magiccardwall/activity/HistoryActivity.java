@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.squareup.picasso.Picasso;
 import com.squareup.seismic.ShakeDetector;
 
 import nz.co.trademe.fedex5.magiccardwall.R;
@@ -53,6 +54,8 @@ public class HistoryActivity extends ActionBarActivity implements ShakeDetector.
         SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         ShakeDetector sd = new ShakeDetector(this);
         sd.start(sensorManager);
+
+//        Picasso.with(this).load("avatarUrl").into(imageView);
 	}
 
     @Override
