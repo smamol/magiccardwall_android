@@ -81,13 +81,13 @@ public class HistoryActivity extends ActionBarActivity implements ShakeDetector.
                         @Override
                         public void success(Response response) {
                             lastIssueId = result;
-                            Toast.makeText(HistoryActivity.this, "success", Toast.LENGTH_SHORT);
+                            Toast.makeText(HistoryActivity.this, "success", Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
                         public void failure(RetrofitError error) {
                             lastIssueId = null;
-                            Toast.makeText(HistoryActivity.this, error.toString(), Toast.LENGTH_SHORT);
+                            Toast.makeText(HistoryActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -103,12 +103,12 @@ public class HistoryActivity extends ActionBarActivity implements ShakeDetector.
                 @Override
                 public void success(Response response) {
                     lastIssueId = null;
-                    Toast.makeText(HistoryActivity.this, "undo success", Toast.LENGTH_SHORT);
+                    Toast.makeText(HistoryActivity.this, "undo success", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Toast.makeText(HistoryActivity.this, error.toString(), Toast.LENGTH_SHORT);
+                    Toast.makeText(HistoryActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
                 }
             });
         }
