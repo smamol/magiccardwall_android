@@ -4,7 +4,9 @@ package nz.co.trademe.fedex5.magiccardwall.fragment;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -13,6 +15,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -177,10 +180,13 @@ public class LoginFragment extends Fragment {
 	}
 
 	private void login(String username, String password) {
+        hideKeyboard();
+
         JiraApiWrapper.getSingleton().getApi().login(new LoginRequest(username, password), new Callback<LoginResponse>() {
             @Override
             public void success(LoginResponse loginResponse, Response response) {
                 if (loginResponse.isSuccess()) {
+                    cacheToken(loginResponse.getToken());
                     Intent i = new Intent(getActivity(), HistoryActivity.class);
                     startActivity(i);
                     getActivity().finish();
@@ -197,5 +203,20 @@ public class LoginFragment extends Fragment {
         });
 	}
 
+    private void cacheToken(String token) {
+        SharedPreferences preferences = getActivity().getSharedPreferences("data", 0);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("token", token);
+        editor.commit();
+    }
 
+    private void hideKeyboard() {
+        InputMethodManager inputManager = (InputMethodManager) this.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        // check if no view has focus:
+        View view = this.getActivity().getCurrentFocus();
+        if (view != null) {
+            inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
 }

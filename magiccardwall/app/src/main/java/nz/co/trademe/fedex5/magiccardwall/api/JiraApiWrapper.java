@@ -1,6 +1,9 @@
 package nz.co.trademe.fedex5.magiccardwall.api;
 
+import android.content.SharedPreferences;
+
 import nz.co.trademe.fedex5.magiccardwall.api.converter.JacksonConverter;
+import nz.co.trademe.fedex5.magiccardwall.api.network.JiraRequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.converter.Converter;
 
@@ -18,7 +21,8 @@ public class JiraApiWrapper {
         RestAdapter.Builder builder = new RestAdapter.Builder()
                 .setConverter(converter)
                 .setEndpoint("http://tmlt218.trademe.local:8888")
-                .setLogLevel(RestAdapter.LogLevel.FULL);
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setRequestInterceptor(JiraRequestInterceptor.getSingleton());
 
         RestAdapter restAdapter = builder.build();
         jiraApi = restAdapter.create(JiraApi.class);
