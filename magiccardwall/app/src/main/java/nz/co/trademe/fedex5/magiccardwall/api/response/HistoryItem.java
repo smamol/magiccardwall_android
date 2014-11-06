@@ -9,6 +9,15 @@ public class HistoryItem {
     private String title;
     private String date;
     private String status;
+    private String avatarUrl;
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
 
     public String getStatus() {
         return status;
