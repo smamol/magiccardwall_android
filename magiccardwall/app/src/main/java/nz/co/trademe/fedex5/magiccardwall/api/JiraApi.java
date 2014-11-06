@@ -21,6 +21,6 @@ public interface JiraApi {
     void login(@Body LoginRequest request, Callback<LoginResponse> callback);
 
     @POST("/api/Status")
-    void status(@Query("issueId") String issueId, ResponseCallback callback);
+    void status(@Query("issueId") String issueId, @Query("undo") boolean undo, ResponseCallback callback);
 
 }

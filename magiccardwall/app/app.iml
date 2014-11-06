@@ -93,6 +93,7 @@
     <orderEntry type="library" exported="" name="jackson-core-lgpl-1.9.3" level="project" />
     <orderEntry type="library" exported="" name="jackson-mapper-lgpl-1.9.3" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-21.0.0" level="project" />
+    <orderEntry type="library" exported="" name="seismic-1.0.0" level="project" />
     <orderEntry type="library" exported="" name="butterknife-6.0.0" level="project" />
     <orderEntry type="library" exported="" name="core-3.0.1" level="project" />
     <orderEntry type="library" exported="" name="okhttp-2.0.0" level="project" />

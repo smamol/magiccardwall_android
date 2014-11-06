@@ -63,4 +63,6 @@ dependencies {
 
     // Jackson - https://github.com/FasterXML/jackson
     compile 'org.codehaus.jackson:jackson-mapper-lgpl:1.9.3'
+
+    compile 'com.squareup:seismic:1.0.0'
 }

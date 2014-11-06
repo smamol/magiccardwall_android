@@ -25,6 +25,7 @@ import android.widget.Toast;
 import nz.co.trademe.fedex5.magiccardwall.R;
 import nz.co.trademe.fedex5.magiccardwall.activity.HistoryActivity;
 import nz.co.trademe.fedex5.magiccardwall.api.JiraApiWrapper;
+import nz.co.trademe.fedex5.magiccardwall.api.network.JiraRequestInterceptor;
 import nz.co.trademe.fedex5.magiccardwall.api.request.LoginRequest;
 import nz.co.trademe.fedex5.magiccardwall.api.response.LoginResponse;
 import retrofit.Callback;
@@ -208,6 +209,8 @@ public class LoginFragment extends Fragment {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("token", token);
         editor.commit();
+
+        JiraRequestInterceptor.getSingleton().setToken(token);
     }
 
     private void hideKeyboard() {
