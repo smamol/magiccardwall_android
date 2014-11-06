@@ -4,14 +4,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
     tools:context="nz.co.trademe.fedex5.magiccardwall.fragment.HistoryFragment" >
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerHistory"
-        android:scrollbars="vertical"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Spinner
+            android:id="@+id/spinnerFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerHistory"
+            android:scrollbars="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+    </LinearLayout>
 
     <com.pkmmte.view.CircularImageView
         android:id="@+id/fab"
@@ -25,8 +38,7 @@
         android:layout_gravity="bottom|right"
         android:src="@drawable/qr"
         android:scaleType="fitXY"
-        app:border_color="#EEEEEE"
-        app:border_width="4dp"
+        app:border_width="0dp"
         app:shadow="false" />
 
 </FrameLayout>

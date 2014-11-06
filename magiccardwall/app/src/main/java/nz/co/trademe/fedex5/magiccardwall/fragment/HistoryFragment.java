@@ -10,7 +10,9 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -38,12 +40,18 @@ public class HistoryFragment extends Fragment {
 			}
 		});
 
+		Spinner filter = (Spinner) v.findViewById(R.id.spinnerFilter);
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.filters,
+				android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		filter.setAdapter(adapter);
+
 		recyclerView = (RecyclerView) v.findViewById(R.id.recyclerHistory);
 
 		layoutManager = new LinearLayoutManager(getActivity());
 		recyclerView.setLayoutManager(layoutManager);
 
-		adapter = new HistoryAdapter();
+		this.adapter = new HistoryAdapter();
 
 		return v;
 	}
