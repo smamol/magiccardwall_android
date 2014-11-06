@@ -1,0 +1,97 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="nz.co.trademe.fedex5.magiccardwall.fragment.LoginFragment"
+    android:background="#002244">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <ImageView
+            android:id="@+id/imageViewLogo"
+            android:layout_width="250dp"
+            android:layout_height="90dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/logo"
+            android:layout_marginBottom="24dp"/>
+
+        <EditText
+            android:id="@+id/editTextUsername"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="4dp"
+            android:inputType="textEmailAddress"
+            android:hint="Username" />
+
+        <TextView
+            android:id="@+id/textViewUsernameError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:textSize="12sp"
+            android:layout_marginBottom="8dp"
+            android:textColor="#C62828"
+            android:text="Can't leave this empty"
+            android:visibility="invisible"
+            tools:visibility="visible" />
+
+        <LinearLayout
+            android:id="@+id/layoutPasswordRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:id="@+id/editTextPassword"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:saveEnabled="true"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"/>
+
+            <ImageView
+                android:id="@+id/imageViewShowPassword"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginRight="12dp"
+                android:saveEnabled="true"
+                android:src="@drawable/eye_closed"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textViewPasswordError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:textSize="12sp"
+            android:textColor="#C62828"
+            android:layout_marginBottom="8dp"
+            android:text="Can't leave this empty"
+            android:visibility="invisible"
+            tools:visibility="visible"
+            android:saveEnabled="true"/>
+
+        <TextView
+            android:id="@+id/textViewLoginButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Login"
+            android:padding="20dp"
+            android:textAllCaps="true"
+            android:textSize="20sp"
+            android:layout_marginTop="8dp"/>
+
+    </LinearLayout>
+
+</FrameLayout>
