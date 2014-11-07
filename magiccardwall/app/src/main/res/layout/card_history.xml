@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
     android:layout_gravity="center"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
-    card_view:cardCornerRadius="4dp"
-    card_view:cardElevation="4dp"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="4dp"
     android:layout_margin="8dp">
 
     <LinearLayout
@@ -16,24 +17,43 @@
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <ImageView
+        <com.pkmmte.view.CircularImageView
             android:id="@+id/cardImageViewAvatar"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/eye_open"
             android:layout_gravity="center_vertical"
+            android:scaleType="fitXY"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"/>
+            android:layout_marginRight="16dp" />
 
-        <TextView
-            android:id="@+id/cardTextViewTitle"
+        <LinearLayout
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Pete moved the task &apos;abc&apos; into &apos;Done&apos;"
             android:layout_gravity="center_vertical"
-            android:textColor="#000"/>
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/cardTextViewTitle"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                tools:text="Sarah moved Automate test scenarios for move into Doing"
+                android:layout_gravity="center_vertical"
+                android:textColor="#cc000000"/>
+
+            <TextView
+                android:id="@+id/cardTextViewTimestamp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                tools:text="Yesterday at 3:00pm"
+                android:textColor="#66000000"/>
+        </LinearLayout>
 
         <View
             android:id="@+id/cardViewColor"

@@ -1,13 +1,11 @@
 package nz.co.trademe.fedex5.magiccardwall.activity;
 
-import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.Toast;
@@ -26,7 +24,7 @@ import retrofit.client.Response;
 /**
  * Created by shindmarsh on 06/11/2014.
  */
-public class HistoryActivity extends ActionBarActivity implements ShakeDetector.Listener {
+public class HistoryActivity extends BaseActivity implements ShakeDetector.Listener {
 
 	private static final String TAG = HistoryActivity.class.getSimpleName();
 
@@ -34,7 +32,6 @@ public class HistoryActivity extends ActionBarActivity implements ShakeDetector.
 
 	private String lastIssueId;
 
-	private AlertDialog dialog;
 	private ShakeDetector sd;
 
 	@Override
@@ -147,31 +144,5 @@ public class HistoryActivity extends ActionBarActivity implements ShakeDetector.
 				Toast.makeText(HistoryActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
 			}
 		});
-	}
-
-	public void showDialog(String title, String msg, String negButton, String posButton, DialogInterface.OnClickListener posAction) {
-		if(dialog != null && dialog.isShowing()) {
-			dialog.dismiss();
-		}
-
-		AlertDialog.Builder builder = new AlertDialog.Builder(HistoryActivity.this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
-				.setTitle(title)
-				.setMessage(msg);
-
-		if (negButton != null) {
-			builder.setNegativeButton(negButton, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					dialog.dismiss();
-				}
-			});
-		}
-
-		if(posButton != null) {
-			builder.setPositiveButton(posButton, posAction);
-		}
-
-		dialog = builder.create();
-		dialog.show();
 	}
 }

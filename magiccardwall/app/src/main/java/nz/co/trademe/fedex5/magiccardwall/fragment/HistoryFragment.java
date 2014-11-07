@@ -27,7 +27,7 @@ import java.util.Iterator;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import nz.co.trademe.fedex5.magiccardwall.R;
-import nz.co.trademe.fedex5.magiccardwall.activity.HistoryActivity;
+import nz.co.trademe.fedex5.magiccardwall.activity.BaseActivity;
 import nz.co.trademe.fedex5.magiccardwall.api.JiraApiWrapper;
 import nz.co.trademe.fedex5.magiccardwall.api.response.HistoryItem;
 import retrofit.Callback;
@@ -41,6 +41,8 @@ public class HistoryFragment extends Fragment {
 	private RecyclerView recyclerView;
 	private RecyclerView.LayoutManager layoutManager;
 	private RecyclerView.Adapter adapter;
+
+	private String username;
 
 	public HistoryFragment() {}
 
@@ -83,6 +85,8 @@ public class HistoryFragment extends Fragment {
 
 		setFilter(Filter.EVERYONE);
 
+		username = getActivity().getSharedPreferences("data", 0).getString("username", "none");
+
 		return v;
 	}
 
@@ -105,7 +109,7 @@ public class HistoryFragment extends Fragment {
 					Iterator<HistoryItem> iterator = historyItems.iterator();
 					while (iterator.hasNext()) {
 						HistoryItem itm = iterator.next();
-						if (!itm.getUsername().equals("pbartrum")) {
+						if (!itm.getUsername().equals(username)) {
 							iterator.remove();
 						}
 					}
@@ -118,7 +122,7 @@ public class HistoryFragment extends Fragment {
 			@Override
 			public void failure(RetrofitError error) {
 				Log.e("HistoryTestActivity", error.toString());
-				((HistoryActivity) getActivity()).showDialog("Oops", "Can't get the history at the moment", "Fine", null, new DialogInterface.OnClickListener() {
+				((BaseActivity) getActivity()).showDialog("Oops", "Can't get the history at the moment", "Fine", null, new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.dismiss();
@@ -134,6 +138,9 @@ public class HistoryFragment extends Fragment {
 		class ViewHolder extends RecyclerView.ViewHolder {
 			@InjectView(R.id.cardTextViewTitle)
 			TextView title;
+
+			@InjectView(R.id.cardTextViewTimestamp)
+			TextView timestamp;
 
 			@InjectView(R.id.cardImageViewAvatar)
 			ImageView avatar;
@@ -164,19 +171,31 @@ public class HistoryFragment extends Fragment {
 
 			HistoryItem item = data.get(i);
 
-			h.title.setText(item.getUsername() + " moved " + item.getId() + ": "  + item.getTitle() + " to " + item.getStatus() + ".");
+			h.title.setText(item.getUsername() + " moved " + item.getTitle() + " into " + item.getStatus());
+			h.timestamp.setText(item.getTimestamp());
 
 			int col = 0;
-			if (item.getStatus().equals("To do")) {
-				col = getResources().getColor(R.color.status_todo);
-			} else if (item.getStatus().equals("In progress")) {
-				col = getResources().getColor(R.color.status_doing);
-			} else if (item.getStatus().equals("Done")) {
-				col = getResources().getColor(R.color.status_done);
+			if (item.getType() != null) {
+				if (item.getType().equals("Dev")) {
+					col = getResources().getColor(R.color.status_dev);
+				} else if (item.getType().equals("Design")) {
+					col = getResources().getColor(R.color.status_design);
+				} else if (item.getType().equals("Test")) {
+					col = getResources().getColor(R.color.status_test);
+				}
+
+				if (col > 0) {
+					h.status.setBackgroundColor(col);
+				}
 			}
 
-			h.status.setBackgroundColor(col);
-			Picasso.with(getActivity()).load(item.getAvatarUrl()).into(h.avatar);
+			String avatarUrl = item.getAvatarUrl();
+			if (avatarUrl != null) {
+				Log.v(TAG, "url --> " + avatarUrl);
+				try {
+					Picasso.with(getActivity()).load(avatarUrl).into(h.avatar);
+				} catch (NullPointerException ignored) {}
+			}
 		}
 
 		@Override

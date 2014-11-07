@@ -180,14 +180,14 @@ public class LoginFragment extends Fragment {
 		}
 	}
 
-	private void login(String username, String password) {
+	private void login(final String username, String password) {
         hideKeyboard();
 
         JiraApiWrapper.getSingleton().getApi().login(new LoginRequest(username, password), new Callback<LoginResponse>() {
             @Override
             public void success(LoginResponse loginResponse, Response response) {
                 if (loginResponse.isSuccess()) {
-                    cacheToken(loginResponse.getToken());
+                    cacheToken(username, loginResponse.getToken());
                     Intent i = new Intent(getActivity(), HistoryActivity.class);
                     startActivity(i);
                     getActivity().finish();
@@ -204,11 +204,12 @@ public class LoginFragment extends Fragment {
         });
 	}
 
-    private void cacheToken(String token) {
+    private void cacheToken(String username, String token) {
         SharedPreferences preferences = getActivity().getSharedPreferences("data", 0);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("token", token);
-        editor.commit();
+	    editor.putString("username", username);
+	    editor.commit();
 
         JiraRequestInterceptor.getSingleton().setToken(token);
     }

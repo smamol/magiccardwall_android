@@ -1,6 +1,5 @@
 package nz.co.trademe.fedex5.magiccardwall.activity;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -11,7 +10,7 @@ import nz.co.trademe.fedex5.magiccardwall.R;
 import nz.co.trademe.fedex5.magiccardwall.api.network.JiraRequestInterceptor;
 import nz.co.trademe.fedex5.magiccardwall.fragment.LoginFragment;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends BaseActivity {
 
 	private static final String FRAGMENT = LoginFragment.class.getName();
 
@@ -20,7 +19,9 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
         SharedPreferences preferences = getSharedPreferences("data", 0);
+
         String token = preferences.getString("token", null);
+
         if (token != null && token.length() > 0) {
             // already logged in
             JiraRequestInterceptor.getSingleton().setToken(token);
