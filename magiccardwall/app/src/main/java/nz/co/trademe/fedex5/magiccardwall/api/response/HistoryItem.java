@@ -1,5 +1,9 @@
 package nz.co.trademe.fedex5.magiccardwall.api.response;
 
+import android.graphics.Color;
+
+import nz.co.trademe.fedex5.magiccardwall.R;
+
 /**
  * Created by pakuhata on 7/11/14.
  */
@@ -15,6 +19,23 @@ public class HistoryItem {
 
     public String getType() {
         return type;
+    }
+
+    public int getColorForType() {
+        if (type != null && type.length() > 0) {
+            if (type.equalsIgnoreCase("dev")) {
+                return R.color.color_dev;
+            }
+            else if (type.equalsIgnoreCase("test")) {
+                return R.color.color_test;
+            }
+            else {
+                return R.color.color_design;
+            }
+        }
+        else {
+            return Color.BLACK;
+        }
     }
 
     public void setType(String type) {
