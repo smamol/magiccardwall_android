@@ -11,6 +11,15 @@ public class HistoryItem {
     private String status;
     private String avatarUrl;
     private String username;
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String getAvatarUrl() {
         return avatarUrl;

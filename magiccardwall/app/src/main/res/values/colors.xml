@@ -1,6 +1,9 @@
 <resources>
 
     <color name="black_overlay">#66000000</color>
+    <color name="color_design" type="color">#BCBEC0</color>
+    <color name="color_dev" type="color">#5592BB</color>
+    <color name="color_test" type="color">#F07994</color>
 
     <color name="status_todo">#FF9100</color>
     <color name="status_doing">#00B0FF</color>
