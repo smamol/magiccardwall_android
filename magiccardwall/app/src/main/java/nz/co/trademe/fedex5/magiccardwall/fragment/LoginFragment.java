@@ -19,6 +19,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +50,9 @@ public class LoginFragment extends Fragment {
 		}
 	};
 
+	private TextView loginButton;
+	private ProgressBar loginProgress;
+
 	public LoginFragment() {}
 
 	@Override
@@ -65,13 +69,15 @@ public class LoginFragment extends Fragment {
 
 
 
-		View loginButton = v.findViewById(R.id.textViewLoginButton);
+		loginButton = (TextView) v.findViewById(R.id.textViewLoginButton);
 		loginButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				loginClicked();
 			}
 		});
+
+		loginProgress = (ProgressBar) v.findViewById(R.id.progressLogin);
 
 		v.findViewById(R.id.imageViewShowPassword).setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -182,29 +188,36 @@ public class LoginFragment extends Fragment {
 
 	private void login(final String username, String password) {
         hideKeyboard();
+		showProgress(true);
 
         JiraApiWrapper.getSingleton().getApi().login(new LoginRequest(username, password), new Callback<LoginResponse>() {
             @Override
             public void success(LoginResponse loginResponse, Response response) {
-                if (loginResponse.isSuccess()) {
+	            if (loginResponse.isSuccess()) {
                     cacheToken(username, loginResponse.getToken());
                     Intent i = new Intent(getActivity(), HistoryActivity.class);
                     startActivity(i);
                     getActivity().finish();
-                }
-                else {
+                } else {
+		            showProgress(false);
                     Toast.makeText(getActivity(), loginResponse.getErrorMessage(), Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
+	            showProgress(false);
+	            Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
             }
         });
 	}
 
-    private void cacheToken(String username, String token) {
+	private void showProgress(boolean show) {
+		loginProgress.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
+		loginButton.setVisibility(show ? View.INVISIBLE : View.VISIBLE);
+	}
+
+	private void cacheToken(String username, String token) {
         SharedPreferences preferences = getActivity().getSharedPreferences("data", 0);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("token", token);

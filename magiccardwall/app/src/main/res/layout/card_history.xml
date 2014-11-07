@@ -17,6 +17,13 @@
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
+        <View
+            android:id="@+id/cardViewColor"
+            android:layout_width="10dp"
+            android:layout_marginRight="16dp"
+            android:layout_height="match_parent"
+            android:background="#ccc"/>
+
         <com.pkmmte.view.CircularImageView
             android:id="@+id/cardImageViewAvatar"
             android:layout_width="48dp"
@@ -24,7 +31,6 @@
             android:src="@drawable/eye_open"
             android:layout_gravity="center_vertical"
             android:scaleType="fitXY"
-            android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp" />
 
         <LinearLayout
@@ -34,6 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
+            android:layout_marginRight="16dp"
             android:orientation="vertical">
 
             <TextView
@@ -54,13 +61,6 @@
                 tools:text="Yesterday at 3:00pm"
                 android:textColor="#66000000"/>
         </LinearLayout>
-
-        <View
-            android:id="@+id/cardViewColor"
-            android:layout_width="20dp"
-            android:layout_marginLeft="16dp"
-            android:layout_height="match_parent"
-            android:background="#ccc"/>
 
     </LinearLayout>
 

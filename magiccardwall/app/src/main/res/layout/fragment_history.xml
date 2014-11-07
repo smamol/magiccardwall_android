@@ -37,7 +37,7 @@
         android:background="@drawable/fab"
         android:layout_gravity="bottom|right"
         android:src="@drawable/qr"
-        android:scaleType="fitXY"
+        android:scaleType="centerInside"
         app:border_width="0dp"
         app:shadow="false" />
 

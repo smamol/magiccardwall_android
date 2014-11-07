@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -82,7 +83,7 @@ public class HistoryFragment extends Fragment {
 
 		layoutManager = new LinearLayoutManager(getActivity());
 		recyclerView.setLayoutManager(layoutManager);
-
+		recyclerView.setItemAnimator(new DefaultItemAnimator());
 		setFilter(Filter.EVERYONE);
 
 		username = getActivity().getSharedPreferences("data", 0).getString("username", "none");
@@ -184,7 +185,7 @@ public class HistoryFragment extends Fragment {
 					col = getResources().getColor(R.color.status_test);
 				}
 
-				if (col > 0) {
+				if (col != 0) {
 					h.status.setBackgroundColor(col);
 				}
 			}

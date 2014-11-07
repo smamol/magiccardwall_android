@@ -6,8 +6,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.TypedValue;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -40,8 +42,11 @@ public class HistoryActivity extends BaseActivity implements ShakeDetector.Liste
 
 		setContentView(R.layout.activity_toolbar);
 
+		setTitle("");
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
 		setSupportActionBar(toolbar);
+		ViewCompat.setElevation(toolbar, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics()));
 
 		if (savedInstanceState == null) {
 			// create fragment
@@ -101,7 +106,6 @@ public class HistoryActivity extends BaseActivity implements ShakeDetector.Liste
                         @Override
                         public void success(Response response) {
                             lastIssueId = result;
-                            Toast.makeText(HistoryActivity.this, "success", Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
