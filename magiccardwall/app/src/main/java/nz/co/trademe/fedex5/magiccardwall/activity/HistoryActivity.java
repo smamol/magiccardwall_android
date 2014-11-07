@@ -149,7 +149,7 @@ public class HistoryActivity extends ActionBarActivity implements ShakeDetector.
 		});
 	}
 
-	private void showDialog(String title, String msg, String negButton, String posButton, DialogInterface.OnClickListener posAction) {
+	public void showDialog(String title, String msg, String negButton, String posButton, DialogInterface.OnClickListener posAction) {
 		if(dialog != null && dialog.isShowing()) {
 			dialog.dismiss();
 		}

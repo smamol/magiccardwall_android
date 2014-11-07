@@ -2,4 +2,11 @@
 
     <color name="black_overlay">#66000000</color>
 
+    <color name="status_todo">#FF9100</color>
+    <color name="status_doing">#00B0FF</color>
+    <color name="status_done">#00E676</color>
+
+    <color name="status_dev">#00B0FF</color>
+    <color name="status_design">#B0BEC5</color>
+    <color name="status_test">#FF4081</color>
 </resources>

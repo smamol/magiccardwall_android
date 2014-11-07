@@ -2,6 +2,7 @@ package nz.co.trademe.fedex5.magiccardwall.fragment;
 
 
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,8 +19,20 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
+import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import nz.co.trademe.fedex5.magiccardwall.R;
+import nz.co.trademe.fedex5.magiccardwall.activity.HistoryActivity;
+import nz.co.trademe.fedex5.magiccardwall.api.JiraApiWrapper;
+import nz.co.trademe.fedex5.magiccardwall.api.response.HistoryItem;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class HistoryFragment extends Fragment {
 
@@ -83,39 +96,60 @@ public class HistoryFragment extends Fragment {
 		integrator.initiateScan();
 	}
 
-	private void setFilter(Filter filter) {
-		switch (filter) {
-			case ME:
-				Log.d(TAG, "filter by ME");
-				// todo me
-				break;
-			case EVERYONE:
-			default:
-				Log.d(TAG, "filter by EVERYONE");
-				// todo everyone
+	private void setFilter(final Filter filter) {
 
-				adapter = new HistoryAdapter(new String[]{"Hello", "Bonjour", "Hallo"});
-				break;
-		}
+		JiraApiWrapper.getSingleton().getApi().history(new Callback<ArrayList<HistoryItem>>() {
+			@Override
+			public void success(ArrayList<HistoryItem> historyItems, Response response) {
+				if (filter == Filter.ME) {
+					Iterator<HistoryItem> iterator = historyItems.iterator();
+					while (iterator.hasNext()) {
+						HistoryItem itm = iterator.next();
+						if (!itm.getUsername().equals("pbartrum")) {
+							iterator.remove();
+						}
+					}
+				}
 
-		recyclerView.setAdapter(adapter);
+				adapter = new HistoryAdapter(historyItems);
+				recyclerView.setAdapter(adapter);
+			}
+
+			@Override
+			public void failure(RetrofitError error) {
+				Log.e("HistoryTestActivity", error.toString());
+				((HistoryActivity) getActivity()).showDialog("Oops", "Can't get the history at the moment", "Fine", null, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				});
+			}
+		});
 	}
 
 
-	private class HistoryAdapter extends RecyclerView.Adapter {
+	class HistoryAdapter extends RecyclerView.Adapter {
 
 		class ViewHolder extends RecyclerView.ViewHolder {
-			TextView tv;
+			@InjectView(R.id.cardTextViewTitle)
+			TextView title;
+
+			@InjectView(R.id.cardImageViewAvatar)
+			ImageView avatar;
+
+			@InjectView(R.id.cardViewColor)
+			View status;
 
 			public ViewHolder(View v) {
 				super(v);
-				tv = (TextView) v.findViewById(R.id.cardTextViewTest);
+				ButterKnife.inject(this, v);
 			}
 		}
 
-		private String[] data;
+		private ArrayList<HistoryItem> data;
 
-		public HistoryAdapter(String[] data) {
+		public HistoryAdapter(ArrayList<HistoryItem> data) {
 			this.data = data;
 		}
 
@@ -126,13 +160,28 @@ public class HistoryFragment extends Fragment {
 
 		@Override
 		public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
-			ViewHolder holder = (ViewHolder) viewHolder;
-			holder.tv.setText(data[i]);
+			ViewHolder h = (ViewHolder) viewHolder;
+
+			HistoryItem item = data.get(i);
+
+			h.title.setText(item.getUsername() + " moved " + item.getId() + ": "  + item.getTitle() + " to " + item.getStatus() + ".");
+
+			int col = 0;
+			if (item.getStatus().equals("To do")) {
+				col = getResources().getColor(R.color.status_todo);
+			} else if (item.getStatus().equals("In progress")) {
+				col = getResources().getColor(R.color.status_doing);
+			} else if (item.getStatus().equals("Done")) {
+				col = getResources().getColor(R.color.status_done);
+			}
+
+			h.status.setBackgroundColor(col);
+			Picasso.with(getActivity()).load(item.getAvatarUrl()).into(h.avatar);
 		}
 
 		@Override
 		public int getItemCount() {
-			return data.length;
+			return data.size();
 		}
 	}
 
